@@ -71,7 +71,7 @@ int main(int argc, char** argv)
             }
         }
 
-        fshare_server_start(100, filename, port);
+        fshare_server_start(filename, port);
         fshare_server_run();
         fshare_server_stop();
         return 0;

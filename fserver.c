@@ -19,8 +19,8 @@ static fdesc fd = {
 };
 
 
-void fshare_server_start(int backlog, const char* filepath, int port) {
-    fshare_sock_create(backlog, port);
+void fshare_server_start(const char* filepath, int port) {
+    fshare_sock_create(port);
     fshare_config_file(filepath);
 }
 
@@ -47,7 +47,7 @@ void fshare_server_stop() {
     fshare_closefile();
 }
 
-void fshare_sock_create(int backlog, int port) {
+void fshare_sock_create(int port) {
     struct sockaddr_in address;
 
     fd_t sockfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -72,7 +72,7 @@ void fshare_sock_create(int backlog, int port) {
         exit(EXIT_FAILURE);
     }
 
-    if (listen(fd.server, backlog) < 0) {
+    if (listen(fd.server, SOMAXCONN) < 0) {
         perror("listen failed");
         fshare_sock_destroy();
         exit(EXIT_FAILURE);

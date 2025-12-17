@@ -10,12 +10,12 @@ typedef struct fdesc {
 } fdesc;
 
 /* Server API */
-void fshare_server_start(int backlog, const char* filepath, int port);
+void fshare_server_start(const char* filepath, int port);
 void fshare_server_run();
 void fshare_server_stop();
 
 /* Socket API */
-void fshare_sock_create(int backlog, int port);
+void fshare_sock_create(int port);
 void fshare_set_sock_option();
 void fshare_sock_destroy();
 
