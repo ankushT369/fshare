@@ -1,5 +1,6 @@
 #include "fserver.h"
 #include "fclient.h"
+#include "fsig.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -92,12 +93,17 @@ int main(int argc, char** argv)
             return 1;
         }
 
-        fd_t sock = fshare_connect_server(ip, cport);
-        if (sock < 0)
+        int ret = fshare_connect_server(ip, cport);
+        if (ret < 0)
             return 1;
 
-        fshare_client_recv(sock);
-        close(sock);
+        fshare_proto();
+        if (fsig_init() < 0) {
+            perror("fsig_init");
+            exit(1);
+        }
+
+        fshare_client_recv();
         return 0;
     }
 
